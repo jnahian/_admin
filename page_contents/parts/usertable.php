@@ -1,13 +1,11 @@
-<?php 
-    $oDb = new Database();
-    
-    //  Delete content
-    
+<?php
+$oDb = new Database();
+
+//  Delete content
 //    if(!empty($_GET['del'])){
 //        $id = $_GET['del'];
 //        $oDb->query("delete from j_user where u_id = '$id'");
 //    }
-
 ?>
 <!--breadcrumbs start-->
 <div id="breadcrumbs-wrapper" class=" grey lighten-3">
@@ -50,35 +48,57 @@
                         </thead>
 
                         <tbody>
-                            
-                            <?php 
-                                $qr = $oDb->query("select * from j_user");
-                                $sl = 1;
-                                while ($res = $oDb->fetch($qr)){ ?>
-                            
-                                    <tr>
-                                        <td><?php echo $sl++; ?></td>
-                                        <td><?php echo ($res['u_fname'].' '.$res['u_lname']); ?></td>
-                                        <td><?php echo $res['u_username']; ?></td>
-                                        <td><?php echo $res['u_email']; ?></td>
-                                        <td><?php echo $res['u_mob']; ?></td>
-                                        <td><?php echo $res['u_role']; ?></td>
-                                        <td><?php echo $res['u_dob']; ?></td>
-                                        <td><?php echo substr($res['u_msg'], 0, 15).'...'; ?></td>
-                                        <td><img class="user_img" src="../uploads/users/<?php echo $res['u_image'];?>" alt=""/></td>
-                                        <td>
-                                            <a class="cyan-text" href="?view=<?php echo $res['u_id']; ?>"><i class="mdi-hardware-cast"></i></a>
-                                            <a class="indigo-text" href="adduser.php?edit=<?php echo $res['u_id']; ?>"><i class="mdi-editor-border-color"></i></a>
-                                            <a class="red-text" href="#" data-id="<?php echo $res['u_id']; ?>" onclick="return deleteItem(this, 'j_user')"><i class="mdi-action-delete"></i></a>
-                                        </td>
-                                    </tr>
-                                    <!--confirm('Are you sure! Want to delete this item.')-->
-                                <?php  }
+
+                            <?php
+                            $qr = $oDb->query("select * from j_user");
+                            $sl = 1;
+                            while ($res = $oDb->fetch($qr)) {
+                                ?>
+
+                                <tr>
+                                    <td><?php echo $sl++; ?></td>
+                                    <td><?php echo ($res['u_fname'] . ' ' . $res['u_lname']); ?></td>
+                                    <td><?php echo $res['u_username']; ?></td>
+                                    <td><?php echo $res['u_email']; ?></td>
+                                    <td><?php echo $res['u_mob']; ?></td>
+                                    <td><?php echo $res['u_role']; ?></td>
+                                    <td><?php echo $res['u_dob']; ?></td>
+                                    <td><?php echo substr($res['u_msg'], 0, 15) . '...'; ?></td>
+                                    <td><img class="user_img" src="../uploads/users/<?php echo $res['u_image']; ?>" alt=""/></td>
+                                    <td>
+                                        <a class="cyan-text modal-trigger" data-id="<?php echo $res['u_id']; ?>" href="#modal1" onclick="return viewItem(this, 'j_user')"><i class="mdi-hardware-cast"></i></a> 
+                                        <a class="indigo-text" href="adduser.php?edit=<?php echo $res['u_id']; ?>"><i class="mdi-editor-border-color"></i></a>
+                                        <a class="red-text" href="#" data-id="<?php echo $res['u_id']; ?>" onclick="return deleteItem(this, 'j_user')"><i class="mdi-action-delete"></i></a>
+                                    </td>
+                                </tr>
+                                <!--confirm('Are you sure! Want to delete this item.')-->
+                            <?php }
                             ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>View User</h4>
+        <div class="col-8">
+            <h5>Julkar Naen Nahian</h5>
+            <p>Administrator</p>
+            <p><strong>Username: </strong> jnahian</p>
+            <p><strong>Email: </strong> nahian_is@yahoo.com</p>
+            <p><srtong>Mobile: </srtong> 01717036048</p>
+            <p><strong>Date of Birth: </strong> 26 dec 1988</p>
+            <p><strong>Message: </strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, consequatur sint, ex at placeat dicta mollitia? Laborum corporis quaerat, molestias illum minus incidunt, ullam consectetur nam consequatur accusamus dolores, similique.</p>
+        </div>
+        <div class="col-4">
+            <img class="responsive" src="../uploads/users/<?php echo $res['u_image']; ?>"/>
+        </div>
+    </div>
+    <div class="modal-footer clearfix">
+        <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">close</a>
     </div>
 </div>
