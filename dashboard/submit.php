@@ -69,16 +69,34 @@ if (!empty($_POST)) {
             $ret['message'] = "Required Field Empty";
     }
     elseif ($operation == 'delete') {
-        if(isset($_POST['id']) && !empty($_POST['id'])){
-            if(!empty($_POST['table'])){
+        if (isset($_POST['id']) && !empty($_POST['id'])) {
+            if (!empty($_POST['table'])) {
                 $id = $_POST['id'];
                 $table = $_POST['table'];
-                if($oDb->query("delete from $table where u_id = '$id'")){ 
+                if ($oDb->query("delete from $table where u_id = '$id'")) {
                     $ret['success'] = true;
                     $ret['message'] = 'Successfully Deleted';
-                } else $ret['message'] = 'Failed! Cannot delete item';
-            } else $ret['message'] = 'Failed! No table given';
-        } else $ret['message'] = 'Failed! Key value missing';
+                } else
+                    $ret['message'] = 'Failed! Cannot delete item';
+            } else
+                $ret['message'] = 'Failed! No table given';
+        } else
+            $ret['message'] = 'Failed! Key value missing';
+    }
+    elseif ($operation == 'view') {
+        if (isset($_POST['id']) && !empty($_POST['id'])) {
+            if (!empty($_POST['table'])) {
+                $id = $_POST['id'];
+                $table = $_POST['table'];
+                if ($oDb->q_fetch("select * from $table where u_id = '$id'")) {
+                    $ret['success'] = true;
+                    $ret['message'] = 'Successfully Opened';
+                } else
+                    $ret['message'] = 'Query Failed!';
+            } else
+                $ret['message'] = 'Failed! No table given';
+        } else
+            $ret['message'] = 'Failed! Key value missing';
     }
 }
 
