@@ -5,6 +5,7 @@ require_once('../functions/functions.php');
 $ret = array("success" => false, "message" => "");
 
 $oDb = new Database();
+$oUser = new User();
 
 if (!empty($_POST)) {
 
@@ -91,6 +92,10 @@ if (!empty($_POST)) {
                 if ($res = $oDb->q_fetch("select * from $table where u_id = '$id'")) {
                     $ret['success'] = true;
                     $ret['message'] = 'Successfully Opened';
+                    
+//                    $data = array('name'=>($res['u_fname'].' '.$res['u_fname']), 'username'=>$res['u_username'], 'role'=> $oUser->getUserRole($res['u_username']), 'email'=>$res['u_email'], 'phone'=> $res['u_mob'], 'dob'=>$res['u_dob'], 'msg'=>$res['u_msg']);
+//                    echo json_encode($data);
+                    
                 } else
                     $ret['message'] = 'Query Failed!';
             } else

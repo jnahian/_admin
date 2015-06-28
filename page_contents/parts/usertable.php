@@ -66,12 +66,11 @@ $oDb = new Database();
                                     <td><?php echo substr($res['u_msg'], 0, 15) . '...'; ?></td>
                                     <td><img class="user_img" src="../uploads/users/<?php echo $res['u_image']; ?>" alt=""/></td>
                                     <td>
-                                        <a class="cyan-text modal-trigger" data-id="<?php echo $res['u_id']; ?>" href="#modal1" onclick="return viewItem(this, 'j_user')"><i class="mdi-hardware-cast"></i></a> 
+                                        <a class="cyan-text" data-id="<?php echo $res['u_id']; ?>" href="#" onclick="return viewItem(this, 'j_user')"><i class="mdi-hardware-cast"></i></a> 
                                         <a class="indigo-text" href="adduser.php?edit=<?php echo $res['u_id']; ?>"><i class="mdi-editor-border-color"></i></a>
                                         <a class="red-text" href="#" data-id="<?php echo $res['u_id']; ?>" onclick="return deleteItem(this, 'j_user')"><i class="mdi-action-delete"></i></a>
                                     </td>
                                 </tr>
-                                <!--confirm('Are you sure! Want to delete this item.')-->
                             <?php }
                             ?>
                         </tbody>
@@ -82,6 +81,36 @@ $oDb = new Database();
     </div>
 </div>
 
-<div id="modal1" class="modal modal-fixed-footer">
-    
+<div id="modal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>View User</h4>
+        
+<?php 
+    $oUser = new User();
+    if(!empty($_GET['view'])){
+        $id = $_GET['view'];
+        
+        if($res = $oDb->q_fetch("select * from j_user where u_id = '$id'")){ ?>
+           
+            <div class="col-8">
+                <h5><?php echo ($res['u_fname'].' '.$res['u_lname']); ?></h5>
+                <p><?php $oUser->getUserRole($res['u_username']); ?></p>
+                <p><strong>Username: </strong> <?php echo $res['u_username']; ?></p>
+                <p><strong>Email: </strong><?php echo $res['u_email']; ?></p>
+                <p><srtong>Mobile: </srtong><?php echo $res['u_mob']; ?></p>
+                <p><strong>Date of Birth: </strong><?php echo $res['u_dob']; ?></p>
+                <p><strong>Message: </strong><?php echo $res['u_msg']; ?></p>
+            </div>
+            <div class="col-4">
+                <img class="responsive" src="../uploads/users/<?php echo $res['u_image']; ?>"/>
+            </div>
+            
+        <?php }
+    }
+?>
+
+    </div>
+    <div class="modal-footer clearfix">
+        <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">close</a>
+    </div>
 </div>

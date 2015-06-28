@@ -45,7 +45,7 @@
         $that = $(that);
         $id = $that.data('id');
 
-        alert($id)
+        //alert($id)
 
         if (confirm('Warning!!! Are You Sure, you want to delete this item')) {
             $.ajax({
@@ -67,20 +67,21 @@
 
     viewItem = function (that, $tablename) {
         var that = $(that),
-                id = that.data('id');
+            id = that.data('id');
         $.ajax({
             url: 'submit.php',
             type: 'POST',
             data: ({"table": $tablename, "operation": "view", "id": id}),
             dataType: 'json',
             success: function (ret) {
+                //alert(ret);
                 Materialize.toast(ret.message, 3000);
                 if (ret.success) {
-                    $('#modal1').load('viewuser.php');
+//                    $('#modal').load('viewuser.php');
                 }
             },
             error: function () {
-                Materialize.toast("Ajax Error!!!");
+                Materialize.toast("Ajax Error!!!", 5000);
             }
         });
     }
@@ -88,5 +89,5 @@
     reloadPage = function () {
         document.location.reload(true);
     }
-
+    
 })(jQuery);
