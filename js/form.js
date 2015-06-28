@@ -75,6 +75,9 @@
             dataType: 'json',
             success: function (ret) {
                 Materialize.toast(ret.message, 3000);
+                if (ret.success) {
+                    $('#modal1').load('viewuser.php');
+                }
             },
             error: function () {
                 Materialize.toast("Ajax Error!!!");

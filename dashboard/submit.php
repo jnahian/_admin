@@ -88,7 +88,7 @@ if (!empty($_POST)) {
             if (!empty($_POST['table'])) {
                 $id = $_POST['id'];
                 $table = $_POST['table'];
-                if ($oDb->q_fetch("select * from $table where u_id = '$id'")) {
+                if ($res = $oDb->q_fetch("select * from $table where u_id = '$id'")) {
                     $ret['success'] = true;
                     $ret['message'] = 'Successfully Opened';
                 } else

@@ -1454,6 +1454,9 @@ footer.page-footer {
 .ml25 {
 	margin-left: 25%;
 }
+
+
+/*coded by julkar n. nahian*/
 .text-center {
     text-align: center;
 }
@@ -1474,4 +1477,27 @@ header .brand-logo {
 }
 footer.page-footer {
     background: #00897B;
+}
+.col-8 {
+	width: 66.67%;
+	float: left;
+}
+.col-4 {
+	width: 33.33%;
+	float: left;
+}
+img.responsive {
+	max-width: 100%;
+	height: auto;
+}
+.modal-content h4 {
+	border-bottom: 2px solid #00897B;
+	padding-bottom: 10px;
+}
+.modal-content h5,
+.modal-content h5 + p{
+	margin: 0;
+}
+.modal-content p {
+	text-align: justify;
 }
