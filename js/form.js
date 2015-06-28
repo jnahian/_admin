@@ -5,7 +5,7 @@
                 btnText = $(that).text(),
                 link = form.attr('action'),
                 type = form.attr('method');
-        
+
 
         form.one("submit", function (e) {
             e.preventDefault();
@@ -40,32 +40,49 @@
         });
         return false;
     }
-    
-    deleteItem = function(that, $tablename){
+
+    deleteItem = function (that, $tablename) {
         $that = $(that);
         $id = $that.data('id');
-        
+
         alert($id)
-        
-        if(confirm('Warning!!! Are You Sure, you want to delete this item')){
+
+        if (confirm('Warning!!! Are You Sure, you want to delete this item')) {
             $.ajax({
                 url: 'submit.php',
                 type: 'POST',
-                data: ({"table":$tablename, "operation":"delete", "id": $id}),
+                data: ({"table": $tablename, "operation": "delete", "id": $id}),
                 dataType: 'json',
-                success: function(ret){
+                success: function (ret) {
                     Materialize.toast(ret.message, 3000);
                     $that.parents('tr').remove();
                 },
-                error: function(){
+                error: function () {
                     Materialize.toast("Ajax Error!!!");
                 }
             });
         }
         return false;
     }
-    
-    reloadPage = function(){
+
+    viewItem = function (that, $tablename) {
+        var that = $(that),
+                id = that.data('id');
+        $.ajax({
+            url: 'submit.php',
+            type: 'POST',
+            data: ({"table": $tablename, "operation": "view", "id": id}),
+            dataType: 'json',
+            success: function (ret) {
+                Materialize.toast(ret.message, 3000);
+            },
+            error: function () {
+                Materialize.toast("Ajax Error!!!");
+            }
+        });
+    }
+
+    reloadPage = function () {
         document.location.reload(true);
     }
 
