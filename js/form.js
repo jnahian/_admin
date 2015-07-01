@@ -69,16 +69,16 @@
         var that = $(that),
             id = that.data('id');
         $.ajax({
-            url: 'submit.php',
+            url: 'viewuser.php',
             type: 'POST',
             data: ({"table": $tablename, "operation": "view", "id": id}),
-            dataType: 'json',
+//            dataType: 'json',
             success: function (ret) {
-                //alert(ret);
-                Materialize.toast(ret.message, 3000);
-                if (ret.success) {
-//                    $('#modal').load('viewuser.php');
-                }
+                alert(ret);
+//                Materialize.toast(ret.message, 3000);
+//                if (ret.success) {
+                    $('#modal').load('viewuser.php');
+//                }
             },
             error: function () {
                 Materialize.toast("Ajax Error!!!", 5000);
