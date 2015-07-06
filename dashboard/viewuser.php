@@ -1,18 +1,35 @@
-<div class="modal-content">
-	<h4>View User</h4>
-	<div class="col-8">
-		<h5>Julkar Naen Nahian</h5>
-		<p>Administrator</p>
-		<p><strong>Username: </strong> jnahian</p>
-		<p><strong>Email: </strong> nahian_is@yahoo.com</p>
-		<p><srtong>Mobile: </srtong> 01717036048</p>
-		<p><strong>Date of Birth: </strong> 26 dec 1988</p>
-		<p><strong>Message: </strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, consequatur sint, ex at placeat dicta mollitia? Laborum corporis quaerat, molestias illum minus incidunt, ullam consectetur nam consequatur accusamus dolores, similique.</p>
-	</div>
-	<div class="col-4">
-		<img class="responsive" src="../uploads/users/<?php echo $res['u_image']; ?>"/>
-	</div>
-</div>
-<div class="modal-footer clearfix">
-	<a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">close</a>
-</div>
+
+
+<?php
+$oUser = new User();
+if (!empty($_GET['view'])) {
+    $id = $_GET['view'];
+
+    if ($res = $oDb->q_fetch("select * from j_user where u_id = '$id'")) {
+        ?>
+        <div id="modal" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h4>View User</h4>
+                <div class="col-8">
+                    <h5><?php echo ($res['u_fname'] . ' ' . $res['u_lname']); ?></h5>
+                    <p><?php $oUser->getUserRole($res['u_username']); ?></p>
+                    <p><strong>Username: </strong> <?php echo $res['u_username']; ?></p>
+                    <p><strong>Email: </strong><?php echo $res['u_email']; ?></p>
+                    <p><srtong>Mobile: </srtong><?php echo $res['u_mob']; ?></p>
+                    <p><strong>Date of Birth: </strong><?php echo $res['u_dob']; ?></p>
+                    <p><strong>Message: </strong><?php echo $res['u_msg']; ?></p>
+                </div>
+                <div class="col-4">
+                    <img class="responsive" src="../uploads/users/<?php echo $res['u_image']; ?>"/>
+                </div>
+            </div>
+            <div class="modal-footer clearfix">
+                <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">close</a>
+            </div>
+        </div>
+
+    <?php
+    }
+}
+?>
+
