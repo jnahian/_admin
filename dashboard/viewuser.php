@@ -23,12 +23,11 @@ if (!empty($_POST)) {
                     <div class = "modal-content white-text">
                         <h4><?php echo ($res['u_fname'] . ' ' . $res['u_lname']);?> <i><?php $oUser->getUserRole($res['u_username']); ?></i></h4>
                         <div class = "col-8">
-                            <p></p>
-                            <p><strong>Username: </strong> <?php echo $res['u_username']; ?></p>
-                            <p><strong>Email: </strong><?php echo $res['u_email']; ?></p>
-                            <p><strong>Mobile: </strong><?php echo $res['u_mob']; ?></p>
-                            <p><strong>Date of Birth: </strong><?php echo $res['u_dob']; ?></p>
-                            <p><strong>Message: </strong><?php echo $res['u_msg']; ?></p>
+                            <p><strong>Username</strong>: <?php echo $res['u_username']; ?></p>
+                            <p><strong>Email</strong>: <?php echo $res['u_email']; ?></p>
+                            <p><strong>Mobile</strong>: <?php echo $res['u_mob']; ?></p>
+                            <p><strong>Date of Birth</strong>: <?php echo $res['u_dob']; ?></p>
+                            <p><strong>Message</strong>: <?php echo $res['u_msg']; ?></p>
                         </div>
                         <div class="col-4">
                             <img class="responsive" src="../uploads/users/<?php echo $res['u_image']; ?>"/>
