@@ -1501,3 +1501,11 @@ img.responsive {
 .modal-content p {
 	text-align: justify;
 }
+.modal-content h4 i {
+    float: right;
+    font-size: 14px;
+    font-weight: 400;
+}
+.modal-content {
+    overflow: hidden;
+}

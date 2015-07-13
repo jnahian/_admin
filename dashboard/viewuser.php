@@ -1,34 +1,48 @@
-
-
 <?php
+require_once('../functions/functions.php');
+
+$ret = array("success" => false, "message" => "");
+
+$oDb = new Database();
 $oUser = new User();
-if (!empty($_GET['view'])) {
-    $id = $_GET['view'];
+if (!empty($_POST)) {
 
-    if ($res = $oDb->q_fetch("select * from j_user where u_id = '$id'")) {
-        ?>
-        <div id="modal" class="modal modal-fixed-footer">
-            <div class="modal-content">
-                <h4>View User</h4>
-                <div class="col-8">
-                    <h5><?php echo ($res['u_fname'] . ' ' . $res['u_lname']); ?></h5>
-                    <p><?php $oUser->getUserRole($res['u_username']); ?></p>
-                    <p><strong>Username: </strong> <?php echo $res['u_username']; ?></p>
-                    <p><strong>Email: </strong><?php echo $res['u_email']; ?></p>
-                    <p><srtong>Mobile: </srtong><?php echo $res['u_mob']; ?></p>
-                    <p><strong>Date of Birth: </strong><?php echo $res['u_dob']; ?></p>
-                    <p><strong>Message: </strong><?php echo $res['u_msg']; ?></p>
-                </div>
-                <div class="col-4">
-                    <img class="responsive" src="../uploads/users/<?php echo $res['u_image']; ?>"/>
-                </div>
-            </div>
-            <div class="modal-footer clearfix">
-                <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">close</a>
-            </div>
-        </div>
+    $operation = htmlentities($_POST['operation'], ENT_QUOTES);
+    
+    if ($operation == 'view') {
+        if (isset($_POST['id']) && !empty($_POST['id'])) {
+            if (!empty($_POST['table'])) {
+                $id = $_POST['id'];
+                $table = $_POST['table'];
+                if ($res = $oDb->q_fetch("select * from $table where u_id = '$id'")) {
+                    $ret['success'] = true;
+                    $ret['message'] = 'Successfully Opened';
+                    ?>
 
-    <?php
+
+                    <div class = "modal-content white-text">
+                        <h4><?php echo ($res['u_fname'] . ' ' . $res['u_lname']);?> <i><?php $oUser->getUserRole($res['u_username']); ?></i></h4>
+                        <div class = "col-8">
+                            <p></p>
+                            <p><strong>Username: </strong> <?php echo $res['u_username']; ?></p>
+                            <p><strong>Email: </strong><?php echo $res['u_email']; ?></p>
+                            <p><strong>Mobile: </strong><?php echo $res['u_mob']; ?></p>
+                            <p><strong>Date of Birth: </strong><?php echo $res['u_dob']; ?></p>
+                            <p><strong>Message: </strong><?php echo $res['u_msg']; ?></p>
+                        </div>
+                        <div class="col-4">
+                            <img class="responsive" src="../uploads/users/<?php echo $res['u_image']; ?>"/>
+                        </div>
+                    </div>
+
+
+                    <?php
+                } else
+                    $ret['message'] = 'Query Failed!';
+            } else
+                $ret['message'] = 'Failed! No table given';
+        } else
+            $ret['message'] = 'Failed! Key value missing';
     }
 }
 ?>
