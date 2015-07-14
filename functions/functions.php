@@ -1,12 +1,14 @@
 <?php session_start();
+/**
+ * @author Julkar N. Nahian
+ */
+define('HOST', 'localhost');
+define('USER', 'root');
+define('PASSWORD', '');
+define('DB_NAME', 'jnahian_management');
 
-    define('HOST', 'localhost');
-    define('USER', 'root');
-    define('PASSWORD', '');
-    define('DB_NAME', 'jnahian_management');
-
-    define('INC_PATH', '../page_contents/includes/');
-    define('PART_PATH', '../page_contents/parts/');
+define('INC_PATH', '../page_contents/includes/');
+define('PART_PATH', '../page_contents/parts/');
 
 class Database {
 
@@ -87,9 +89,9 @@ class Tools {
     public function alert($msg) {
         echo '<script>alert("' . $msg . '");</script>';
     }
-    
+
     public function toast($msg) {
-        echo '<script>Materialize.toast(<span>'.$msg.'</span>, 1500);</script>';
+        echo '<script>Materialize.toast(<span>' . $msg . '</span>, 1500);</script>';
     }
 
     public function redirect($link) {
@@ -118,42 +120,58 @@ class Check {
 
 }
 
-class User extends Database{
+class User extends Database {
 
-    public function isLogged() {
-        return isset($_SESSION['username'])? true: false;
+    private $tools;
+
+    public function __construct() {
+        $this->tools = new Tools();
+    }
+
+    private function isLogged() {
+        return isset($_SESSION['username']) ? true : false;
     }
 
     public function userName() {
         
     }
-    
-    public function hasAcces() {
-        if(!$this->isLogged()){
-//            echo "login failed.";
-            header("location:../");
+
+    public function hasAccess() {
+        if ($this->isExpired() || !$this->isLogged()) {
+            $this->tools->redirect("../");
             exit();
         }
     }
-    
+
+    private function isExpired() {
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600 )) {
+            session_unset();
+            session_destroy();
+            return true;
+        }
+        $_SESSION['LAST_ACTIVITY'] = time();
+        return false;
+    }
+
     public function getUserRole($username) {
         $res = $this->q_fetch("select * from j_user where u_username = '$username'");
-        switch ($res['u_role']){
+        switch ($res['u_role']) {
             case 1: echo 'Administator';
-                    break;
+                break;
             case 2: echo 'Mordarator';
-                    break;
+                break;
             case 3: echo 'Client';
-                    break;
+                break;
         }
     }
-    public function getUserImage($username){
+
+    public function getUserImage($username) {
         $res = $this->q_fetch("select * from j_user where u_username = '$username'");
-        echo $image = "../uploads/users/".$res['u_image'];
+        echo $image = "../uploads/users/" . $res['u_image'];
     }
-    
-    public function logout(){
-        !isset($_SESSION['username'])|| isset($_GET['out']) ? session_destroy() : header("location:../dashboard/");
+
+    public function logout() {
+        !isset($_SESSION['username']) || isset($_GET['out']) ? session_destroy() : header("location:../dashboard/");
     }
 
 }

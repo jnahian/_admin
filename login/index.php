@@ -9,6 +9,7 @@
             if($user_data = $oDb->q_fetch("select * from j_user where u_username = '$user'")){
                 if($user_data['u_pass'] === $pass) {
                     $_SESSION['username'] = $user;
+                    $_SESSION['LAST_ACTIVITY'] = time();
                     $oTools->redirect('../dashboard/');
                 } else $err = 'Password Doesn\'t Match.';
             } else $err = 'You are not registered yet.';
